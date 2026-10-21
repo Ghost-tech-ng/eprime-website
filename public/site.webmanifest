@@ -1,0 +1,11 @@
+{
+  "name": "E-Prime Industries",
+  "short_name": "E-Prime",
+  "icons": [
+    { "src": "/icons/android-chrome-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icons/app-icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ],
+  "theme_color": "#0A1A1F",
+  "background_color": "#0A1A1F",
+  "display": "standalone"
+}

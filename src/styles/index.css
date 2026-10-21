@@ -1,0 +1,159 @@
+@import "tailwindcss";
+@import "./tokens.css";
+
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+@theme inline {
+  --color-bg: var(--ep-bg);
+  --color-surface: var(--ep-surface);
+  --color-surface-2: var(--ep-surface-2);
+  --color-fg: var(--ep-fg);
+  --color-muted: var(--ep-muted);
+  --color-line: var(--ep-line);
+  --color-primary: var(--ep-primary);
+  --color-primary-strong: var(--ep-primary-strong);
+  --color-primary-soft: var(--ep-primary-soft);
+  --color-on-primary: var(--ep-on-primary);
+  --color-accent: var(--ep-accent);
+  --color-accent-strong: var(--ep-accent-strong);
+  --color-accent-soft: var(--ep-accent-soft);
+  --color-on-accent: var(--ep-on-accent);
+  --color-ink-950: var(--ep-ink-950);
+  --color-ink-900: var(--ep-ink-900);
+  --color-ink-800: var(--ep-ink-800);
+  --color-tech: var(--ep-tech);
+  --color-agro: var(--ep-agro);
+  --color-build: var(--ep-build);
+  --color-capital: var(--ep-capital);
+  --color-ok: var(--ep-ok);
+  --color-warn: var(--ep-warn);
+  --color-bad: var(--ep-bad);
+
+  --font-display: var(--ep-display);
+  --font-body: var(--ep-body);
+  --font-mono: var(--ep-mono);
+
+  --radius-control: var(--ep-radius-control);
+  --radius-card: var(--ep-radius-card);
+  --ease-ep: var(--ep-ease);
+}
+
+/* Section that is always ink, whatever the page theme */
+.ep-ink {
+  background: var(--ep-bg);
+  color: var(--ep-fg);
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 88px;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--ep-primary);
+  color: var(--ep-on-primary);
+}
+
+:focus-visible {
+  outline: 2px solid var(--ep-fg);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 3px var(--ep-bg);
+}
+
+h1, h2, h3, h4 { font-weight: 700; }
+
+.ep-h2 {
+  font-family: var(--ep-display);
+  font-weight: 700;
+  font-stretch: 108%;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+  font-size: clamp(32px, 4.6vw, 56px);
+}
+
+.ep-lede {
+  font-size: clamp(17px, 1.6vw, 20px);
+  line-height: 1.6;
+  color: var(--ep-muted);
+  max-width: 60ch;
+}
+
+.ep-btn { min-height: 44px; padding: 10px 18px; font-size: 15px; }
+.ep-btn:active { transform: translateY(0); }
+.ep-btn-solid { background: var(--ep-primary); color: var(--ep-on-primary); }
+.ep-btn-solid:hover { background: var(--ep-primary-strong); }
+
+.ep-container {
+  width: 100%;
+  max-width: 1240px;
+  margin-inline: auto;
+  padding-inline: 16px;
+}
+@media (min-width: 768px) { .ep-container { padding-inline: 32px; } }
+
+/* Engineering grid used on ink surfaces */
+.ep-grid-bg {
+  background-image:
+    linear-gradient(to right, color-mix(in oklab, var(--ep-line) 55%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in oklab, var(--ep-line) 55%, transparent) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+.ep-grid-fade {
+  mask-image: radial-gradient(ellipse 80% 70% at 60% 40%, #000 30%, transparent 75%);
+}
+
+/* Hero entrance runs in CSS so it starts before hydration (LCP) */
+@keyframes ep-rise {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes ep-lift {
+  0% { opacity: 0; transform: translate(-6%, 22%); }
+  100% { opacity: 1; transform: none; }
+}
+@keyframes ep-draw {
+  to { stroke-dashoffset: 0; }
+}
+@keyframes ep-marquee {
+  to { transform: translateX(-50%); }
+}
+@keyframes ep-blink {
+  50% { opacity: 0; }
+}
+@keyframes ep-pulse {
+  0% { box-shadow: 0 0 0 0 color-mix(in oklab, var(--ep-ok) 60%, transparent); }
+  70% { box-shadow: 0 0 0 8px transparent; }
+  100% { box-shadow: 0 0 0 0 transparent; }
+}
+
+.ep-rise { animation: ep-rise 240ms var(--ep-ease) both; }
+.ep-lift { transform-box: fill-box; animation: ep-lift 180ms var(--ep-ease) both; }
+.ep-draw { stroke-dasharray: 1; stroke-dashoffset: 1; animation: ep-draw 1600ms var(--ep-ease) both; }
+.ep-marquee { animation: ep-marquee 40s linear infinite; }
+.ep-caret { animation: ep-blink 1s steps(1) infinite; }
+.ep-live-dot { animation: ep-pulse 2s var(--ep-ease) infinite; }
+
+.ep-word { display: inline-block; animation: ep-rise 420ms var(--ep-ease) both; }
+
+/* Prime cut corner on hover cards */
+.ep-cut-hover { transition: clip-path var(--ep-fast) var(--ep-ease), transform var(--ep-fast) var(--ep-ease); clip-path: polygon(0 0, 100% 0, 100% 0, 100% 100%, 0 100%); }
+.ep-cut-hover:hover { clip-path: var(--ep-cut); transform: translateY(-2px); }
+
+.ep-no-scrollbar { scrollbar-width: none; }
+.ep-no-scrollbar::-webkit-scrollbar { display: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+  }
+  .ep-marquee { animation: none; }
+}

@@ -1,0 +1,60 @@
+/* E-Prime Industries · design tokens · brand v1.0 (October 2026)
+   Light values on :root, dark values under [data-theme="dark"] or .dark */
+:root {
+  /* surfaces and text */
+  --ep-bg: #F3F6F5;        --ep-surface: #FFFFFF;   --ep-surface-2: #E9EFED;
+  --ep-fg: #0C1E24;        --ep-muted: #4A5F66;     --ep-line: #D5DEDC;
+  /* brand */
+  --ep-primary: #167A6E;   --ep-primary-strong: #0F5F56; --ep-primary-soft: #DDEFEB;
+  --ep-accent: #B9822A;    --ep-accent-strong: #8A5E12;  --ep-accent-soft: #F6EBD6;
+  --ep-on-primary: #FFFFFF; --ep-on-accent: #0C1E24;
+  --ep-ink-950: #0A1A1F;   --ep-ink-900: #10262D;   --ep-ink-800: #173640;
+  /* divisions */
+  --ep-tech: #167A6E; --ep-agro: #2F7A2B; --ep-build: #476682; --ep-capital: #3C4FA8;
+  /* status */
+  --ep-ok: #2F7A2B; --ep-warn: #C2410C; --ep-bad: #B42318;
+  /* type */
+  --ep-display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --ep-body: "IBM Plex Sans", "Segoe UI", Roboto, Arial, sans-serif;
+  --ep-mono: "JetBrains Mono", Menlo, Consolas, monospace;
+  /* type scale (px) */
+  --ep-text-hero: clamp(44px, 8vw, 96px); --ep-text-h1: 40px; --ep-text-h2: 28px; --ep-text-h3: 20px;
+  --ep-text-body: 17px; --ep-text-ui: 15px; --ep-text-small: 14px; --ep-text-eyebrow: 12px;
+  /* spacing (8pt) */
+  --ep-s1: 4px; --ep-s2: 8px; --ep-s3: 12px; --ep-s4: 16px; --ep-s5: 24px; --ep-s6: 32px; --ep-s7: 48px; --ep-s8: 64px; --ep-s9: 96px;
+  /* shape and motion */
+  --ep-radius-control: 4px; --ep-radius-card: 10px;
+  --ep-cut: polygon(0 0, calc(100% - 16px) 0, 100% 40px, 100% 100%, 0 100%);
+  --ep-ease: cubic-bezier(.2,.8,.2,1); --ep-fast: 180ms;
+}
+[data-theme="dark"], .dark, .ep-ink {
+  --ep-bg: #0A1A1F;        --ep-surface: #10262D;   --ep-surface-2: #173640;
+  --ep-fg: #E7EFED;        --ep-muted: #9DB3B0;     --ep-line: #24444D;
+  --ep-primary: #37B3A2;   --ep-primary-strong: #5FCBBC; --ep-primary-soft: #123C38;
+  --ep-accent: #D9A54A;    --ep-accent-strong: #E8BE74;  --ep-accent-soft: #3A2C12;
+  --ep-on-primary: #0A1A1F; --ep-on-accent: #0A1A1F;
+  --ep-tech: #37B3A2; --ep-agro: #6CC15F; --ep-build: #8FB0CC; --ep-capital: #8A98E0;
+  --ep-ok: #6CC15F; --ep-warn: #F2A25C; --ep-bad: #F28B82;
+  color-scheme: dark;
+}
+/* Base */
+body { background: var(--ep-bg); color: var(--ep-fg); font-family: var(--ep-body); font-size: var(--ep-text-body); line-height: 1.6; }
+h1, h2, h3 { font-family: var(--ep-display); letter-spacing: -0.015em; line-height: 1.1; text-wrap: balance; }
+.ep-hero { font-family: var(--ep-display); font-weight: 700; font-stretch: 112%; letter-spacing: -0.025em; line-height: 1; font-size: var(--ep-text-hero); }
+.ep-eyebrow { font-family: var(--ep-display); font-weight: 600; font-size: var(--ep-text-eyebrow); letter-spacing: 0.14em; text-transform: uppercase; color: var(--ep-muted); }
+.ep-mono, .ep-price { font-family: var(--ep-mono); font-variant-numeric: tabular-nums; }
+/* Buttons */
+.ep-btn { display: inline-flex; align-items: center; gap: 8px; font: 600 14px var(--ep-body); padding: 10px 16px; border-radius: var(--ep-radius-control); border: 1px solid transparent; cursor: pointer; text-decoration: none; transition: transform var(--ep-fast) var(--ep-ease), background var(--ep-fast); }
+.ep-btn:hover { transform: translateY(-1px); }
+.ep-btn-primary { background: var(--ep-accent); color: var(--ep-on-accent); }          /* one per screen */
+.ep-btn-secondary { background: transparent; color: var(--ep-primary); border-color: var(--ep-primary); }
+.ep-btn-ghost { background: transparent; color: inherit; border-color: var(--ep-line); }
+/* Cards and the prime cut */
+.ep-card { background: var(--ep-surface); border: 1px solid var(--ep-line); border-radius: var(--ep-radius-card); padding: 22px; }
+.ep-cut { clip-path: var(--ep-cut); }
+/* Badges */
+.ep-badge { display: inline-flex; align-items: center; gap: 6px; font: 600 11.5px var(--ep-display); letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 9px; border-radius: 999px; }
+.ep-badge-live { background: var(--ep-primary-soft); color: var(--ep-primary-strong); }
+.ep-badge-beta { background: var(--ep-accent-soft); color: var(--ep-accent-strong); }
+.ep-badge-soon { background: var(--ep-surface-2); color: var(--ep-muted); }
+@media (prefers-reduced-motion: reduce) { .ep-btn { transition: none; } }
