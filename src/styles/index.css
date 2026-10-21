@@ -145,6 +145,30 @@ h1, h2, h3, h4 { font-weight: 700; }
 .ep-cut-hover { transition: clip-path var(--ep-fast) var(--ep-ease), transform var(--ep-fast) var(--ep-ease); clip-path: polygon(0 0, 100% 0, 100% 0, 100% 100%, 0 100%); }
 .ep-cut-hover:hover { clip-path: var(--ep-cut); transform: translateY(-2px); }
 
+/* Mascot loops start and end on the rest pose, so the reduced-motion override leaves it still */
+@keyframes ep-bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+@keyframes ep-blink-eye {
+  0%, 92%, 100% { transform: scaleY(1); }
+  95% { transform: scaleY(0.1); }
+}
+@keyframes ep-wave {
+  0%, 60%, 100% { transform: rotate(0deg); }
+  70% { transform: rotate(-14deg); }
+  80% { transform: rotate(8deg); }
+  90% { transform: rotate(-10deg); }
+}
+@keyframes ep-glow {
+  0%, 100% { filter: drop-shadow(0 0 0 transparent); }
+  50% { filter: drop-shadow(0 0 6px #5FD0BE); }
+}
+.ep-bob { animation: ep-bob 4s ease-in-out infinite; }
+.ep-blink-eye { transform-box: fill-box; transform-origin: center; animation: ep-blink-eye 5s linear infinite; }
+.ep-wave { transform-box: fill-box; transform-origin: 50% 90%; animation: ep-wave 3.6s var(--ep-ease) infinite; }
+.ep-antenna { animation: ep-glow 2.4s ease-in-out infinite; }
+
 .ep-no-scrollbar { scrollbar-width: none; }
 .ep-no-scrollbar::-webkit-scrollbar { display: none; }
 

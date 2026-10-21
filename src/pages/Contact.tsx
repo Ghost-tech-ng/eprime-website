@@ -11,6 +11,9 @@ const interests = [
   { value: "custom-software", label: "Custom software" },
   { value: "edusmart360", label: "EduSmart360 for my school" },
   { value: "cloud", label: "Cloud, hosting or security" },
+  { value: "agro", label: "E-Prime Agro" },
+  { value: "build", label: "E-Prime Build" },
+  { value: "capital", label: "E-Prime Capital" },
   { value: "other", label: "Something else" },
 ] as const;
 
@@ -83,7 +86,7 @@ export function Contact() {
   ];
 
   return (
-    <section className="ep-ink relative overflow-hidden" aria-labelledby="contact-title">
+    <section className="relative overflow-hidden" aria-labelledby="contact-title">
       <div aria-hidden="true" className="ep-grid-bg ep-grid-fade absolute inset-0" />
       <div className="ep-container relative grid gap-14 pb-24 pt-16 md:pb-32 md:pt-24 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20">
         <div>

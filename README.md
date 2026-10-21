@@ -1,13 +1,36 @@
 # eprime-website
 
-The website for **E-Prime Industries Limited** (RC 8473729), a software company in Benin City, Nigeria. It goes live at [eprimeindustries.site](https://eprimeindustries.site).
+The group website for **E-Prime Industries Limited** (RC 8473729), Benin City, Nigeria. It goes live at [eprimeindustries.site](https://eprimeindustries.site).
 
-It covers the company, its services, the four divisions, the CAC certificate, and the first product, **EduSmart360** (school management for Nigerian schools).
+The home page covers the whole group: four divisions on equal footing, how each one opens, the CAC certificate, and the first shipped product, **EduSmart360**. Each division has its own page:
+
+| Division | Page | Status |
+|----------|------|--------|
+| E-Prime Tech: software, products, custom builds | `/divisions/tech` | Active |
+| E-Prime Agro: greenhouse, poultry, aquaculture | `/divisions/agro` | Forming |
+| E-Prime Build: civil, mechanical, electrical works | `/divisions/build` | Forming |
+| E-Prime Capital: investment in the group's work | `/divisions/capital` | Forming |
+
+Pages for forming divisions have a roadmap, the go-live rule, and a register-interest form that sends by email or WhatsApp.
+
+## Moving a division to its subdomain
+
+When a division gets its own site, set `site` on that division in `src/content/site.ts`:
+
+```ts
+site: "https://tech.eprimeindustries.site",
+```
+
+Every link to the division (header, footer, home cards, company page) then points to the subdomain. Links go through `divisionHref()` and `SmartLink`. The `/divisions/<key>` page still builds, so old links keep working. You can redirect it at the host if you want.
+
+## Photos
+
+Photo slots read from `src/assets/photos/`. Any slot without a file shows an isometric drawing placeholder. The filenames, sizes and prompts are in [`src/assets/photos/README.md`](src/assets/photos/README.md).
 
 ## Stack
 
 - React 19, TypeScript (strict), Vite 6
-- Tailwind CSS v4, with brand tokens in `src/styles/tokens.css` (verdigris `#167A6E`, bronze `#B9822A`, ink `#0A1A1F`)
+- Tailwind CSS v4, with brand tokens in `src/styles/tokens.css` (verdigris `#167A6E`, bronze `#B9822A`, ink `#0A1A1F`). The light theme is the default; visitors can switch to dark.
 - `motion` for animation, loaded lazily (`LazyMotion` + `m.*`) so it stays out of the first paint, and respecting `prefers-reduced-motion`
 - React Router 7
 - Static prerendering: every route is rendered to real HTML at build time, with per-page title, description, canonical, Open Graph, Twitter and JSON-LD (`Organization`, `WebSite`, `SoftwareApplication`, `BreadcrumbList`). The build also writes `sitemap.xml`.
@@ -30,8 +53,14 @@ npm run preview    # serve dist/
 src/
   content/      site.ts, products.ts, services.ts. Every word and number on the site lives here.
   seo.ts        route list, meta and JSON-LD per page
-  pages/        Home, EduSmart360, Company, Contact, NotFound
-  components/   layout/, home/, product/, shared/, ui/
+  pages/        Home, Division (one template for all four), EduSmart360, Company, Contact, NotFound
+  components/   art/       isometric placeholder drawings per division
+                brand/     mascot, division logos and colours
+                home/      group home sections
+                tech/      product shelf, services, how we work (Tech page)
+                shared/    contact band, roadmap, go-live card
+                layout/, product/, ui/
+  assets/photos/  drop-in photos (see its README)
   entry-client.tsx / entry-server.tsx
 scripts/prerender.mjs
 public/         brand SVGs, icons, CAC certificate, OG image
@@ -49,8 +78,11 @@ Copy follows the brand voice: sentence case, British spelling, naira first, no e
 - Contact: brief form (opens email or WhatsApp with the brief filled in)
 - Prerendered HTML, meta, JSON-LD, sitemap, robots, a 404 page, and reduced-motion support
 
-**Phase 2: visuals and the mascot**
-- Bronze-and-verdigris mascot (non-human, carrying the prime stroke) for the hero, 404 page and empty states
+**Phase 2: group site, visuals and the mascot**
+- Home rebuilt as the group site, with a page per division and subdomain-ready links (done)
+- Light theme by default (done)
+- Prime, the bronze robot mascot, in the hero and 404 page (done)
+- Photos for the 13 slots in `src/assets/photos/` (pending: drawings show until they arrive)
 - Real EduSmart360 screenshots in place of the illustrative dashboard mock
 - Product-specific OG images per page
 

@@ -44,7 +44,7 @@ export function EduSmart360() {
 
   return (
     <>
-      <section className="ep-ink relative overflow-hidden" aria-labelledby="product-title">
+      <section className="relative overflow-hidden" aria-labelledby="product-title">
         <div aria-hidden="true" className="ep-grid-bg ep-grid-fade absolute inset-0" />
         <div className="ep-container relative pb-20 pt-10 md:pb-24 md:pt-14">
           <nav aria-label="Breadcrumb" className="ep-rise">
@@ -56,8 +56,8 @@ export function EduSmart360() {
               </li>
               <ChevronRight size={12} aria-hidden="true" />
               <li>
-                <Link to="/#products" className="hover:text-fg">
-                  Products
+                <Link to="/divisions/tech" className="hover:text-fg">
+                  Tech
                 </Link>
               </li>
               <ChevronRight size={12} aria-hidden="true" />

@@ -1,8 +1,8 @@
 import { Hero } from "../components/home/Hero";
-import { ProductShelf } from "../components/home/ProductShelf";
-import { Services } from "../components/home/Services";
-import { HowWeWork } from "../components/home/HowWeWork";
-import { DivisionsStrip } from "../components/home/DivisionsStrip";
+import { DivisionsGrid } from "../components/home/DivisionsGrid";
+import { FromDivisions } from "../components/home/FromDivisions";
+import { HowDivisionsOpen } from "../components/home/HowDivisionsOpen";
+import { MadeInBenin } from "../components/home/MadeInBenin";
 import { CertificateSection } from "../components/shared/CertificateSection";
 import { ContactBand } from "../components/shared/ContactBand";
 
@@ -10,12 +10,16 @@ export function Home() {
   return (
     <>
       <Hero />
-      <ProductShelf />
-      <Services />
-      <HowWeWork />
-      <DivisionsStrip />
+      <DivisionsGrid />
+      <FromDivisions />
+      <HowDivisionsOpen />
+      <MadeInBenin />
       <CertificateSection />
-      <ContactBand />
+      <ContactBand
+        title="Building, farming or backing something?"
+        body="Software project, a farm that needs records, a site that needs a schedule, or a conversation about what comes next. Tell us, and we come back with questions and honest numbers in naira."
+        whatsappText="Hello E-Prime, I would like to talk to you."
+      />
     </>
   );
 }

@@ -1,7 +1,7 @@
-import { Link } from "react-router";
 import { PrimeSymbol } from "../brand/PrimeSymbol";
 import { Wordmark } from "../brand/Wordmark";
-import { company, divisions } from "../../content/site";
+import { SmartLink } from "../ui/SmartLink";
+import { company, divisionHref, divisions } from "../../content/site";
 import { edusmart } from "../../content/products";
 
 const columns = [
@@ -10,7 +10,7 @@ const columns = [
     links: [
       { label: `${edusmart.name}`, to: `/products/${edusmart.slug}` },
       { label: "Pricing", to: `/products/${edusmart.slug}#pricing` },
-      { label: "Custom builds", to: "/#services" },
+      { label: "Custom builds", to: "/divisions/tech#services" },
     ],
   },
   {
@@ -24,7 +24,7 @@ const columns = [
   },
   {
     title: "Divisions",
-    links: divisions.map((d) => ({ label: `${d.name}${d.status === "Forming" ? " (forming)" : ""}`, to: "/#divisions" })),
+    links: divisions.map((d) => ({ label: `${d.name}${d.status === "Forming" ? " (forming)" : ""}`, to: divisionHref(d) })),
   },
 ];
 
@@ -50,9 +50,9 @@ export function SiteFooter() {
                 <ul className="mt-4 space-y-3 text-[15px]">
                   {col.links.map((l) => (
                     <li key={l.label}>
-                      <Link to={l.to} className="text-fg/80 transition-colors hover:text-fg">
+                      <SmartLink to={l.to} className="text-fg/80 transition-colors hover:text-fg">
                         {l.label}
-                      </Link>
+                      </SmartLink>
                     </li>
                   ))}
                 </ul>

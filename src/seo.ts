@@ -1,4 +1,5 @@
-import { SITE_URL, company } from "./content/site";
+import { SITE_URL, company, divisions } from "./content/site";
+import type { DivisionKey } from "./content/site";
 import { edusmart } from "./content/products";
 
 type JsonLd = Record<string, unknown>;
@@ -46,7 +47,19 @@ const organization: JsonLd = {
     areaServed: company.countryCode,
     availableLanguage: ["en"],
   },
-  knowsAbout: ["Software development", "Web development", "Mobile apps", "School management software", "Cloud hosting", "IT consulting"],
+  knowsAbout: [
+    "Software development",
+    "Web development",
+    "Mobile apps",
+    "School management software",
+    "Cloud hosting",
+    "IT consulting",
+    "Agriculture",
+    "Construction",
+    "Civil engineering",
+    "Investment",
+  ],
+  department: divisions.map((d) => ({ "@type": "Organization", name: d.name, url: `${SITE_URL}${d.path}`, description: d.scope })),
 };
 
 const website: JsonLd = {
@@ -92,16 +105,61 @@ const edusmartApp: JsonLd = {
   featureList: [...edusmart.pillars.map((p) => p.title), ...edusmart.everythingElse].join(", "),
 };
 
+const divisionMeta: Record<DivisionKey, { title: string; description: string }> = {
+  tech: {
+    title: "E-Prime Tech · Websites, apps and custom software from Benin City",
+    description:
+      "E-Prime Tech builds websites, mobile apps and custom software for Nigerian businesses, priced in naira, and ships EduSmart360 for schools.",
+  },
+  agro: {
+    title: "E-Prime Agro · Greenhouse, poultry and aquaculture, measured",
+    description:
+      "E-Prime Agro is being formed: farm-management software for small greenhouse and poultry operations in Edo State first, then a farm of our own.",
+  },
+  build: {
+    title: "E-Prime Build · Civil, mechanical and electrical works to schedule",
+    description:
+      "E-Prime Build is being formed: site-diary and progress tools for contractors first, then construction contracts delivered to the drawing and the date.",
+  },
+  capital: {
+    title: "E-Prime Capital · Patient money for prime movers",
+    description:
+      "E-Prime Capital is the last division to open. It starts with group profits reinvested into E-Prime divisions, and takes outside capital only under licence.",
+  },
+};
+
 export const routes: RouteMeta[] = [
   {
     path: "/",
-    title: "E-Prime Industries · Prime movers. Software built in Benin City",
+    title: "E-Prime Industries · Prime movers. Software, farms, structures and capital from Benin City",
     description:
-      "E-Prime Industries builds websites, mobile apps and custom software from Benin City, and ships EduSmart360, school management for Nigerian schools. RC 8473729.",
+      "E-Prime Industries is a Benin City company with four divisions: Tech (open, ships EduSmart360), and Agro, Build and Capital, being formed. RC 8473729.",
     priority: 1,
     changefreq: "weekly",
     jsonLd: [organization, website],
   },
+  ...divisions.map(
+    (d): RouteMeta => ({
+      path: d.path,
+      title: divisionMeta[d.key].title,
+      description: divisionMeta[d.key].description,
+      priority: d.status === "Active" ? 0.9 : 0.7,
+      changefreq: "monthly",
+      jsonLd: [
+        {
+          "@type": "Organization",
+          name: d.name,
+          url: `${SITE_URL}${d.path}`,
+          description: d.intro,
+          parentOrganization: { "@id": `${SITE_URL}/#organization` },
+        },
+        breadcrumbs([
+          { name: "Home", path: "/" },
+          { name: d.name, path: d.path },
+        ]),
+      ],
+    }),
+  ),
   {
     path: `/products/${edusmart.slug}`,
     title: "EduSmart360 by E-Prime · School management software for Nigerian schools",
@@ -113,7 +171,7 @@ export const routes: RouteMeta[] = [
       edusmartApp,
       breadcrumbs([
         { name: "Home", path: "/" },
-        { name: "Products", path: "/#products" },
+        { name: "Tech", path: "/divisions/tech" },
         { name: edusmart.name, path: `/products/${edusmart.slug}` },
       ]),
     ],
@@ -137,7 +195,7 @@ export const routes: RouteMeta[] = [
     path: "/contact",
     title: "Contact · Start a project with E-Prime Industries",
     description:
-      "Tell us what you need built: a website, a mobile app, custom software or EduSmart360 for your school. WhatsApp 0810 638 2861.",
+      "Tell us what you need: a website, an app, EduSmart360 for your school, or early access to E-Prime Agro, Build or Capital. WhatsApp 0810 638 2861.",
     priority: 0.6,
     changefreq: "yearly",
     jsonLd: [

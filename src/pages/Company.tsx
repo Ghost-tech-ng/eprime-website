@@ -1,13 +1,15 @@
 import { useState } from "react";
-import { Check, Copy, Download } from "lucide-react";
+import { ArrowUpRight, Check, Copy, Download } from "lucide-react";
 import { Badge } from "../components/ui/Badge";
+import { SmartLink } from "../components/ui/SmartLink";
+import { DivisionLogo } from "../components/brand/DivisionLogo";
 import { Eyebrow } from "../components/ui/Eyebrow";
 import { Reveal } from "../components/ui/Reveal";
 import { SectionHeading } from "../components/ui/SectionHeading";
 import { PrimeSymbol } from "../components/brand/PrimeSymbol";
 import { CertificateSection } from "../components/shared/CertificateSection";
 import { ContactBand } from "../components/shared/ContactBand";
-import { company, divisions, values } from "../content/site";
+import { company, divisionHref, divisions, values } from "../content/site";
 
 const legal: Array<[string, string]> = [
   ["Registered name", company.legalName],
@@ -68,7 +70,7 @@ function CopyButton({ text, label }: { text: string; label: string }) {
 export function Company() {
   return (
     <>
-      <section className="ep-ink relative overflow-hidden" aria-labelledby="company-title">
+      <section className="relative overflow-hidden" aria-labelledby="company-title">
         <div aria-hidden="true" className="ep-grid-bg ep-grid-fade absolute inset-0" />
         <div aria-hidden="true" className="absolute -right-24 bottom-[-12%] hidden text-surface lg:block">
           <PrimeSymbol className="h-[520px] w-auto" primeColor="var(--ep-surface-2)" animate delay={200} />
@@ -193,14 +195,26 @@ export function Company() {
           <ul className="mt-14 divide-y divide-line border-y border-line">
             {divisions.map((d, i) => (
               <li key={d.key}>
-                <Reveal delay={i * 0.04} className="grid items-center gap-4 py-7 md:grid-cols-[220px_1fr_auto] md:gap-10">
-                  <img src={`/brand/divisions/eprime-${d.key}.svg`} alt={d.name} className="h-8 w-auto dark:hidden" loading="lazy" />
-                  <img src={`/brand/divisions/eprime-${d.key}-on-dark.svg`} alt={d.name} className="hidden h-8 w-auto dark:block" loading="lazy" />
-                  <div>
-                    <p className="font-semibold">{d.headline}</p>
-                    <p className="mt-1 text-sm text-muted">{d.scope}</p>
-                  </div>
-                  <Badge status={d.status} />
+                <Reveal delay={i * 0.04}>
+                  <SmartLink
+                    to={divisionHref(d)}
+                    className="group grid items-center gap-4 py-7 md:grid-cols-[220px_1fr_auto_auto] md:gap-10"
+                  >
+                    <span>
+                      <DivisionLogo division={d} className="h-8 w-auto" />
+                    </span>
+                    <span>
+                      <span className="block font-semibold">{d.headline}</span>
+                      <span className="mt-1 block text-sm text-muted">{d.scope}</span>
+                    </span>
+                    <Badge status={d.status} />
+                    <ArrowUpRight
+                      size={18}
+                      strokeWidth={1.75}
+                      aria-hidden="true"
+                      className="hidden text-muted transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-fg md:block"
+                    />
+                  </SmartLink>
                 </Reveal>
               </li>
             ))}

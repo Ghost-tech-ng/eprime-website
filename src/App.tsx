@@ -1,6 +1,7 @@
 import { Route, Routes } from "react-router";
 import { Layout } from "./components/layout/Layout";
 import { Home } from "./pages/Home";
+import { Division } from "./pages/Division";
 import { EduSmart360 } from "./pages/EduSmart360";
 import { Company } from "./pages/Company";
 import { Contact } from "./pages/Contact";
@@ -11,6 +12,10 @@ export function App() {
     <Routes>
       <Route element={<Layout />}>
         <Route index element={<Home />} />
+        <Route path="divisions/tech" element={<Division divisionKey="tech" />} />
+        <Route path="divisions/agro" element={<Division divisionKey="agro" />} />
+        <Route path="divisions/build" element={<Division divisionKey="build" />} />
+        <Route path="divisions/capital" element={<Division divisionKey="capital" />} />
         <Route path="products/edusmart360" element={<EduSmart360 />} />
         <Route path="company" element={<Company />} />
         <Route path="contact" element={<Contact />} />
